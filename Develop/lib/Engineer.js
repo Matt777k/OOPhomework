@@ -2,7 +2,7 @@
 
 // in addition to Employee's properties and methods, Engineer will also have:
 
-github // GitHub username
+const engineer = new Employee(github) // GitHub username
 
 getGithub()
 

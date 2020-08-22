@@ -2,7 +2,7 @@
 
 // In addition to Employee's properties and methods, Intern will also have:
 
-school
+const intern = new Employee(school)
 
 getSchool()
 
