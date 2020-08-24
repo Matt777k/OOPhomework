@@ -2,21 +2,25 @@
 
 const Employee = require("./Employee")
 
+// const manager = new Manager(officeNumber)
 // The other three classes will extend Employee.
 
 // In addition to Employee's properties and methods, Manager will also have:
 class Manager extends Employee {
-    constructor(officeNumber) {
-       super(officeNumber);
-       this.officeNumber = officeNumber;
+    constructor(name, id, email, officeNumber) {
+      super(name, id, email);
+      this.officeNumber = officeNumber;
     }
     getRole()  {
-
+      return "Manager";
+    }
+    getOfficeNumber() {
+       return this.officeNumber;
     }
  }
  
 
 
-
+module.exports = Manager;
  // Overridden to return 'Manager'
 

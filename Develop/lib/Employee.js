@@ -22,7 +22,7 @@ getEmail() {
 }
 getRole() {
     // Returns 'Employee'
-    return "Employee"
+    return "Employee";
 }
 }
 
