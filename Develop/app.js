@@ -21,7 +21,7 @@ function buildTeam() {
         type: "list",
         message: "Please select the role of the team member you want to add",
         name: "role",
-        choices: ["Engineer", "Intern", "Manager", "Finish Team Build"],
+        choices: ["Engineer", "Intern", "Finish Team Build"],
       },
     ])
     .then(function (userInput) {
@@ -34,12 +34,13 @@ function buildTeam() {
           addIntern();
           break;
 
-        case "Manager":
-          addManager();
-          break;
-
         case "Finish Team Build":
-          render(employees);
+          let html = render(employees);
+          fs.writeFile(outputPath, html, (err) => {
+            if (err) throw err;
+            console.log('The html has been created.');
+        });
+
           break;
       }
     });
@@ -157,9 +158,10 @@ const addEngineer = () => {
               message: "what is the team member's github?"
             }
   ]).then(function (data) {
-    employees.push("Engineer: ", data.name, data.id, data.email, data.github)
+    var engineer = new Engineer(data.name, data.id, data.email, data.github)
+    employees.push(engineer);
     buildTeam();
-    console.log(employees);
+    console.log(engineer);
   })
 };
 
@@ -186,9 +188,10 @@ const addIntern = () => {
               message: "what is the team member's school?"
             }
   ]).then(function (data) {
-    employees.push("Intern: ", data.name, data.id, data.email, data.school)
+    var intern = new Intern(data.name, data.id, data.email, data.school)
+    employees.push(intern)
     buildTeam();
-    console.log(employees);
+    console.log(intern);
   })
 };
 
@@ -197,33 +200,34 @@ const addManager = () => {
             {
               type: "input",
               name: "name",
-              message: "what is the team member's first and last name?",
+              message: "what is the team Manager's first and last name?",
             },
             {
               type: "input",
               name: "id",
-              message: "what is the team member's id?",
+              message: "what is the Manager's id?",
             },
             {
               type: "input",
               name: "email",
-              message: "what is the team member's email?",
+              message: "what is the Manager's email?",
             },
             {
               type: "input",
               name: "officeNumber",
-              message: "what is the team member's office number?"
+              message: "what is the Manager's office number?"
             }
   ]).then(function (data) {
-    employees.push("Manager: ", data.name, data.id, data.email, data.officenumber)
+    manager = new Manager(data.name, data.id, data.email, data.officenumber)
+    employees.push(manager)
     buildTeam();
-    console.log(employees);
+    console.log(manager);
   })
 };
 
-
+addManager();
 // render();
-buildTeam();
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
