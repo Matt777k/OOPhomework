@@ -10,83 +10,218 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const team = [];
+const employees = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-function buildTeam () {
-inquirer.prompt([
-  {
-    type: "list",
-    message: "Please select the role of the team member you want to add or select Finished Team Build",
-    name: "role",
-    choices: [
-      "Engineer",
-      "Intern",
-      "Manager",
-      "Finished Team Build"
-    ]
-  },
-  {
-    type: "input",
-    name: "name",
-    message: "what is the team member's first and last name?",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "what is the team member's id?",  
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "what is the team member's email?", 
-  } 
-]).then(function(userInput) {
-  switch(userInput.role) {
-    case "Engineer":
-      return inquirer.prompt ([
-        {
-          type: "input",
-          name: "github",
-          message: "what is the team member's github?",   
-        },
-        {
-          type: "list",
-          message: "Would you like to add another team member?",
-          name: "add",
-          choices: [
-            "Yes",
-            "No"
-          ]
-        }
-        // break;
-      ])
+function buildTeam() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Please select the role of the team member you want to add",
+        name: "role",
+        choices: ["Engineer", "Intern", "Manager", "Finish Team Build"],
+      },
+    ])
+    .then(function (userInput) {
+      switch (userInput.role) {
+        case "Engineer":
+          addEngineer();
+          break;
 
+        case "Intern":
+          addIntern();
+          break;
+
+        case "Manager":
+          addManager();
+          break;
+
+        case "Finish Team Build":
+          render(employees);
+          break;
       }
-      
-      
+    });
+}
+// function buildTeam() {
+//   inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         message:
+//           "Please select the role of the team member you want to add",
+//         name: "role",
+//         choices: ["Engineer", "Intern", "Manager"],
+//       },
+//       {
+//         type: "input",
+//         name: "name",
+//         message: "what is the team member's first and last name?",
+//       },
+//       {
+//         type: "input",
+//         name: "id",
+//         message: "what is the team member's id?",
+//       },
+//       {
+//         type: "input",
+//         name: "email",
+//         message: "what is the team member's email?",
+//       },
+//     ])
+//     .then(function (userInput) {
+//       switch (userInput.role) {
+//         case "Engineer":
+//           return inquirer.prompt([
+//             {
+//               type: "input",
+//               name: "github",
+//               message: "what is the team member's github?",
+//             },
+//             {
+//               type: "list",
+//               message: "Would you like to add another team member?",
+//               name: "add",
+//               choices: ["Yes", "No"],
+//             }
+//           ]);
 
-    case "Intern":
-      addIntern();
-      break;
+//       }
 
-    case "Manager":
-      addManager();
-      break;
+//       switch (userInput.role) {
+//         case "Intern":
+//           return inquirer.prompt([
+//             {
+//               type: "input",
+//               name: "school",
+//               message: "what school did the intern go to?",
+//             },
+//             {
+//               type: "list",
+//               message: "Would you like to add another team member?",
+//               name: "add",
+//               choices: ["Yes", "No"],
+//             },
+//           ]);
+//       }
+//       break;
 
-    case "Finished Team Build":
-    render();
-    break;
-  }
-}); 
+//       switch (userInput.role) {
+//         case "Manager":
+//           return inquirer.prompt([
+//             {
+//               type: "input",
+//               name: "officeNumber",
+//               message: "what is the Manager's office phone number?",
+//             },
+//             {
+//               type: "list",
+//               message: "Would you like to add another team member?",
+//               name: "add",
+//               choices: ["Yes", "No"],
+//             },
+//           ]);
+//       }
+//       break;
+
+//       // render();
+
+//     });
+// }
 // .then(function(data) {
 // console.log(data)
 //   var renderData = render(data);
 // })
+
+const addEngineer = () => {
+  inquirer.prompt([
+            {
+              type: "input",
+              name: "name",
+              message: "what is the team member's first and last name?",
+            },
+            {
+              type: "input",
+              name: "id",
+              message: "what is the team member's id?",
+            },
+            {
+              type: "input",
+              name: "email",
+              message: "what is the team member's email?",
+            },
+            {
+              type: "input",
+              name: "github",
+              message: "what is the team member's github?"
+            }
+  ]).then(function (data) {
+    employees.push("Engineer: ", data.name, data.id, data.email, data.github)
+    buildTeam();
+    console.log(employees);
+  })
 };
 
-const addEngineer = () => {}
+const addIntern = () => {
+  inquirer.prompt([
+            {
+              type: "input",
+              name: "name",
+              message: "what is the team member's first and last name?",
+            },
+            {
+              type: "input",
+              name: "id",
+              message: "what is the team member's id?",
+            },
+            {
+              type: "input",
+              name: "email",
+              message: "what is the team member's email?",
+            },
+            {
+              type: "input",
+              name: "school",
+              message: "what is the team member's school?"
+            }
+  ]).then(function (data) {
+    employees.push("Intern: ", data.name, data.id, data.email, data.school)
+    buildTeam();
+    console.log(employees);
+  })
+};
+
+const addManager = () => {
+  inquirer.prompt([
+            {
+              type: "input",
+              name: "name",
+              message: "what is the team member's first and last name?",
+            },
+            {
+              type: "input",
+              name: "id",
+              message: "what is the team member's id?",
+            },
+            {
+              type: "input",
+              name: "email",
+              message: "what is the team member's email?",
+            },
+            {
+              type: "input",
+              name: "officeNumber",
+              message: "what is the team member's office number?"
+            }
+  ]).then(function (data) {
+    employees.push("Manager: ", data.name, data.id, data.email, data.officenumber)
+    buildTeam();
+    console.log(employees);
+  })
+};
+
+
 // render();
 buildTeam();
 // After the user has input all employees desired, call the `render` function (required
